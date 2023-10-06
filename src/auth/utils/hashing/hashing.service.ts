@@ -3,9 +3,9 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class HashingService {
+  SALT = 10;
   async passwordhash(password: string) {
-    const salt = 10;
-    const hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(password, this.SALT);
     return hash;
   }
 
