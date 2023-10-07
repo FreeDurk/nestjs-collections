@@ -29,7 +29,8 @@ export class JwtAuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { id: user.id, user: user };
+    const { password, ...userInfo } = user; //use @UseInterceptors(ClassSerializerInterceptor) and exclude passport on User Entity instead
+    const payload = { id: user.id, userInfo };
     const token = await this.jwtService.signAsync(payload);
 
     return { access_token: token };
