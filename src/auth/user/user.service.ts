@@ -17,6 +17,7 @@ export class UserService {
   async currentUser(req: any) {
     return req.user;
   }
+
   async create(userDetails: CreateUserDto) {
     const password = await this.hashService.passwordhash(userDetails.password);
 

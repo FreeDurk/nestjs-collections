@@ -1,18 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Todo } from './todo.entity';
 
-@Entity({ name: 'user' })
-export class User {
+@Entity({ name: 'todo-item' })
+export class TodoItem {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column({ nullable: false })
-  name: string;
+  title: string;
 
   @Column({ nullable: false })
-  email: string;
+  description: string;
 
-  @Column({ nullable: false })
-  password: string;
+  @ManyToOne(() => Todo, (todo) => todo.todoItem)
+  todo: Todo;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
