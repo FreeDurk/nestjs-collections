@@ -6,11 +6,13 @@ import { UserModule } from './auth/user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './configModule/database.module';
 import { TodoModule } from './todo/todo.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     DatabaseConfigModule,
     // ConfigModule.forRoot({ isGlobal: true }),
+    EventEmitterModule.forRoot(),
     JwtAuthModule,
     UserModule,
     TodoModule,

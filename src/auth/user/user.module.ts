@@ -8,6 +8,7 @@ import { LocalStrategy } from '../passport/local/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '../passport/jwt/jwt.strategy';
 import { JwtAuthService } from '../jwt-auth/jwt-auth.service';
+import { UserCratedListener } from 'src/listeners/user-created.listener';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), PassportModule],
@@ -18,6 +19,7 @@ import { JwtAuthService } from '../jwt-auth/jwt-auth.service';
     JwtStrategy,
     HashingService,
     JwtAuthService,
+    UserCratedListener,
   ],
 })
 export class UserModule {}
