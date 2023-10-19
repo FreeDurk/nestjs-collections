@@ -12,11 +12,11 @@ import { TodoItem } from 'src/todo/entity/todo-items.entity';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
-        host: configService.get('DATABASE_HOST'),
-        port: +configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USER'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE'),
+        host: process.env.DATABASE_HOST,
+        port: +process.env.DATABASE_PORT,
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME,
         entities: [User, Todo, TodoItem],
         synchronize: true, //dont use on production
       }),
