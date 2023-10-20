@@ -1,21 +1,29 @@
+FROM node:18 as builder
+
+ENV NODE_ENV build
+
+# USER node
+WORKDIR /home/node
+
+COPY package*.json ./
+RUN npm ci
+
+COPY --chown=node:node . .
+RUN npm run build \
+    && npm prune --production
+
+# ---
+
 FROM node:18
 
-# Create app directory, this is in our container/in our image
-WORKDIR /derek/src/app
+ENV NODE_ENV production
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+# USER node
+WORKDIR /home/node
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-COPY . .
-
-RUN npm run build
+COPY --from=builder --chown=node:node /home/node/package*.json ./
+COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
+COPY --from=builder --chown=node:node /home/node/dist/ ./dist/
 
 EXPOSE 3000
-CMD [ "node", "dist/main" ]
+CMD ["node", "dist/main.js"]
